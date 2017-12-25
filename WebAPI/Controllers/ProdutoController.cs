@@ -19,11 +19,13 @@ namespace WebAPI.Controllers
             new Produto() { Codigo = 5, Nome = "Pelicula de Vidro", Categoria = "Acessorios", Valor = 19.99m},
         };
 
+        [HttpGet]
         public IEnumerable<Produto> ListarTodos()
         {
             return produtos;
         }
 
+        [HttpGet]
         public IHttpActionResult Obter(int codigo)
         {
             var produto = produtos.FirstOrDefault(p => p.Codigo == codigo);
@@ -33,10 +35,12 @@ namespace WebAPI.Controllers
             }
             else
             {
-                return Ok(produto);
+                //return Ok(produto);
+                return Json<Produto>(produto);
             }
         }
 
+        [HttpGet]
         public IEnumerable<Produto> ListarPorCategoria(string categoria)
         {
             return produtos.Where(p => string.Equals(p.Categoria, categoria, StringComparison.OrdinalIgnoreCase));
