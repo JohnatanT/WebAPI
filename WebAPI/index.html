@@ -9,13 +9,24 @@
         <h3>Lista de Produtos</h3>
         <ul id="listaProdutos"></ul>
     </div>
-
     <div>
         <h3>Pesquisa por Código</h3>
         <input type="text" name="txtCodigo" id="txtCodigo" />
-        <input type="button" name="btnPesquisar" id="btnPesquisar" onclick="Pesquisar()"/>
+        <input type="button" name="btnPesquisar" id="btnPesquisar" onclick="Pesquisar()" />
         <br />
         <span id="produto"></span>
+    </div>
+    <div>
+        <input type="button" name="btnPost" id="btnPost" onclick="Post()" />
+        <span id="post"></span>
+    </div>
+    <div>
+        <input type="button" name="btnPut" id="btnPut" onclick="Put()" />
+        <span id="put"></span>
+    </div>
+    <div>
+        <input type="button" name="btnDelete" id="btnDelete" onclick="Delete()" />
+        <span id="delete"></span>
     </div>
 
     <script src="Scripts/jquery-1.10.2.min.js"></script>
@@ -34,10 +45,62 @@
 
         function Pesquisar() {
             var codigo = $("#txtCodigo").val();
-            $.getJSON(uri + "?codigo=" + codigo )
+            $.getJSON(uri + "?codigo=" + codigo)
                 .done(function (data) {
                     $("#produto").text("Produto: " + data.Nome + " " + data.Valor);
                 });
+        }
+
+        function Post() {
+
+            var produto = { Codigo: 10, Nome: "Produto 10", Categoria: "Outros", Valor: 110 };
+
+            $.ajax({
+                type: "POST",
+                url: uri,
+                dataType: 'json',
+                data: JSON.stringfy(produto),
+                success: function (data) {//Sucesso
+                    $("#post").text("Produto Cadastrado com Sucesso!");
+                },
+                error: function (data) {//Caso aconteça erro
+                    alert(data.responseText);
+                }
+            });
+        }
+
+        function Put() {
+
+            var produto = { Codigo: 20, Nome: "Produto 20", Categoria: "Outros", Valor: 120 };
+
+            $.ajax({
+                type: "PUT",
+                url: uri,
+                dataType: 'json',
+                data: JSON.stringfy(produto),
+                success: function (data) {//Sucesso
+                    $("#put").text("Produto Cadastrado/atualizado com Sucesso!");
+                },
+                error: function (data) {//Caso aconteça erro
+                    alert(data.responseText);
+                }
+            });
+        }
+
+        function Delete() {
+
+
+            var codigo = $("#txtCodigo").val();
+            $.ajax({
+                type: "DELETE",
+                url: uri + "?codigo=" + codigo,
+                success: function (data) {//Sucesso
+                    $("#delete").text("Produto excluido com Sucesso!");
+                },
+                error: function (data) {//Caso aconteça erro
+                    alert(data.responseText);
+                }
+            });
         }
     </script>
 

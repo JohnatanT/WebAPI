@@ -45,5 +45,25 @@ namespace WebAPI.Controllers
         {
             return produtos.Where(p => string.Equals(p.Categoria, categoria, StringComparison.OrdinalIgnoreCase));
         }
+
+
+        public void Post([FromBody] Produto produto)
+        {
+            //Realiza Cadastro do Produto
+
+        }
+
+        public void Put([FromBody] Produto produto)
+        {
+            //Realiza Update do Produto
+
+        }
+
+        public void Delete([FromBody] int codigo)
+        {
+            //Realiza exclusão de um produto com base no código
+
+        }
+
     }
 }
